@@ -14,7 +14,7 @@ pipeline {
         stage('Create DockerImage') {
             steps {
                 script {
-                    sh 'docker build --file ./app/ -t abhayjain99/abhayscoreme:1.0.0 .'
+                    sh 'docker build --file ./app/Dockerfile -t abhayjain99/abhayscoreme:1.0.0 .'
                     //def newapp = docker.build("abhayjain99/abhayscoreme:1.0.0")
                     // withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
                        // sh "docker login -u ${env.dockerhubUser} -p ${env.dockerhubPassword}"
