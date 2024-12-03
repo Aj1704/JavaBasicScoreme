@@ -16,10 +16,10 @@ pipeline {
                 script {
                     sh 'docker build --file ./app/Dockerfile -t abhayjain99/abhayscoreme:1.0.0 .'
                     //def newapp = docker.build("abhayjain99/abhayscoreme:1.0.0")
-                    // withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
-                       // sh "docker login -u ${env.dockerhubUser} -p ${env.dockerhubPassword}"
-                       // sh 'docker push shanem/spring-petclinic:latest'
-                    // }
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
+                       sh "docker login -u ${env.dockerhubUser} -p ${env.dockerhubPassword}"
+                       sh 'docker push abhayjain99/abhayscoreme:1.0.0'
+                    }
                 }
             }
         }
