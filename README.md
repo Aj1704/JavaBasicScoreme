@@ -42,7 +42,7 @@ Installed **sonar** in jenkins<br />
 Github
 
 <br />
-![Alt text](Sonar/Github.png?raw=true "GitHub")
+![Alt text](Sonar/Github.png?raw=true "Github")
 
   
   
