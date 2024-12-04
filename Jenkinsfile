@@ -28,10 +28,28 @@ pipeline {
             script {
                 scannerHome = tool 'sonar'
             }
-            withSonarQubeEnv('SonarCloud') {
-              sh "${scannerHome}/bin/sonar-scanner"
+            withSonarQubeEnv('sonar') {
+              sh "${scannerHome}/bin/sonar-scanner -Dsonar.sources=app -Dsonar.projectKey=Aj1704_PythonFlaskScoreme -Dsonar.organization=aj1704"
             }
           }
-    }
+        }
+        stage("Quality Gate") {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don't
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+        stage('Coverage') {
+            steps {
+                script {
+                    sh """
+                    /bin/bash -c "python3 -m venv ~/venv; . ~/venv/bin/activate; lizard"
+                    """
+                }
+            }
+        }
     }
 }
