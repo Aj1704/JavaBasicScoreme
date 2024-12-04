@@ -46,10 +46,31 @@ pipeline {
             steps {
                 script {
                     sh """
-                    /bin/bash -c "python3 -m venv ~/venv; . ~/venv/bin/activate; ~/venv/bin/pip install -r requirements.txt; lizard; coverage run ./app/app.py"
+                    /bin/bash -c "python3 -m venv ~/venv; . ~/venv/bin/activate; ~/venv/bin/pip install -r requirements.txt; lizard"
                     """
                 }
             }
+        }
+        stage('OWASP') {
+            steps {
+                script {
+                    sh """
+                    /bin/bash -c "python3 -m venv ~/venv; . ~/venv/bin/activate; ~/venv/bin/pip install owasp-depscan; depscan --src /var/jenkins_home/workspace/abhay@2 --reports-dir /var/jenkins_home"
+                    """
+                }
+            }
+        }
+    }
+    post {
+        failure {
+            mail to: 'abhayranwaka99@gmail.com',
+                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                 body: "Something is wrong with ${env.BUILD_URL}"
+        }
+        success {
+             mail to: 'abhayranwaka99@gmail.com',
+                 subject: "Success Pipeline: ${currentBuild.fullDisplayName}",
+                 body: "This is done ${env.BUILD_URL}"
         }
     }
 }
