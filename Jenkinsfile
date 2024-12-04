@@ -70,7 +70,7 @@ pipeline {
         success {
              mail to: 'abhayranwaka99@gmail.com',
                  subject: "Success Pipeline: ${currentBuild.fullDisplayName}",
-                 body: "This is done ${env.BUILD_URL}"
+                 body: "This isall done ${env.BUILD_URL}"
         }
     }
 }
