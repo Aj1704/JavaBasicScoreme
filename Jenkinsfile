@@ -29,7 +29,7 @@ pipeline {
                 scannerHome = tool 'sonar'
             }
             withSonarQubeEnv('sonar') {
-              sh "${scannerHome}/bin/sonar-scanner -Dsonar.sources=app -Dsonar.projectKey=Aj1704_PythonFlaskScoreme -Dsonar.organization=aj1704"
+              sh "${scannerHome}/bin/sonar-scanner -Dsonar.sources=app -Dsonar.projectKey=Aj1704_PythonFlaskScoreme -Dsonar.organization=aj1704 -Dsonar.exclusions=**/test_*.py"
             }
           }
         }
@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    /bin/bash -c "python3 -m venv ~/venv; . ~/venv/bin/activate; ~/venv/bin/pip install -r requirements.txt; lizard; coverage run --source=./app/ -m pytest; coverage html "
+                    /bin/bash -c "python3 -m venv ~/venv; . ~/venv/bin/activate; ~/venv/bin/pip install -r requirements.txt; lizard; ~/venv/bin/pip install pytest;coverage run --source=./app/ -m pytest; coverage html "
                     """
                 }
             }
@@ -62,6 +62,9 @@ pipeline {
         }
     }
     post {
+        always {
+            archiveArtifacts allowEmptyArchive: true, artifacts: '**/*.html, *.log*, *.txt'
+        }
         failure {
             mail to: 'abhayranwaka99@gmail.com',
                  subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
