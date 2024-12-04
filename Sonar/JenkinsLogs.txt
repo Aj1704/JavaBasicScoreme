@@ -1,0 +1,509 @@
+Started by user Abhay Jain
+Replayed #76
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/abhay@2
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential ssh-creds-scm-ssh
+Cloning the remote Git repository
+Cloning repository git@github.com:Aj1704/PythonFlaskScoreme.git
+ > git init /var/jenkins_home/workspace/abhay@2 # timeout=10
+Fetching upstream changes from git@github.com:Aj1704/PythonFlaskScoreme.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.39.5'
+using GIT_SSH to set credentials ssh-creds-scm-ssh
+Verifying host key using known hosts file, will automatically accept unseen keys
+ > git fetch --tags --force --progress -- git@github.com:Aj1704/PythonFlaskScoreme.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url git@github.com:Aj1704/PythonFlaskScoreme.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 3da67d061774b467f632d47a6bde412613c9aad4 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 3da67d061774b467f632d47a6bde412613c9aad4 # timeout=10
+Commit message: "add new changes"
+ > git rev-list --no-walk 3da67d061774b467f632d47a6bde412613c9aad4 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Dummy)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ pwd
+[Pipeline] echo
+Output: /var/jenkins_home/workspace/abhay@2
+
+[Pipeline] sh
++ ls -lart
+[Pipeline] echo
+Output1: total 32
+drwxrwsr-x 7 jenkins jenkins 4096 Dec  4 08:06 ..
+-rw-r--r-- 1 jenkins jenkins  552 Dec  4 08:06 sonar-project.properties
+-rw-r--r-- 1 jenkins jenkins  113 Dec  4 08:06 requirements.txt
+drwxr-sr-x 2 jenkins jenkins 4096 Dec  4 08:06 app
+-rw-r--r-- 1 jenkins jenkins    0 Dec  4 08:06 README.md
+-rw-r--r-- 1 jenkins jenkins 2032 Dec  4 08:06 Jenkinsfile
+drwxr-sr-x 3 jenkins jenkins 4096 Dec  4 08:06 .idea
+drwxr-sr-x 5 jenkins jenkins 4096 Dec  4 08:06 .
+drwxr-sr-x 8 jenkins jenkins 4096 Dec  4 08:06 .git
+
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Create DockerImage)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker build --file ./app/Dockerfile -t abhayjain99/abhayscoreme:1.0.0 .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 191B done
+#1 DONE 0.0s
+
+#2 [auth] library/python:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.9-slim
+#3 DONE 1.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/library/python:3.9-slim@sha256:5772df931ea2bad11e17170ce221f86c751c91eaa537733f069e20bbbb8e9fa7
+#5 resolve docker.io/library/python:3.9-slim@sha256:5772df931ea2bad11e17170ce221f86c751c91eaa537733f069e20bbbb8e9fa7 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 56.48kB 0.1s done
+#6 DONE 0.1s
+
+#7 [3/6] RUN pwd
+#7 CACHED
+
+#8 [4/6] COPY requirements.txt requirements.txt
+#8 CACHED
+
+#9 [2/6] WORKDIR /app
+#9 CACHED
+
+#10 [5/6] RUN pip install -r requirements.txt
+#10 CACHED
+
+#11 [6/6] COPY . .
+#11 DONE 0.1s
+
+#12 exporting to image
+#12 exporting layers 0.0s done
+#12 writing image sha256:491ec729e585aa1354d5e0c1133a94b31abc53d6022362aa6373fe51ec3d7534
+#12 writing image sha256:491ec729e585aa1354d5e0c1133a94b31abc53d6022362aa6373fe51ec3d7534 done
+#12 naming to docker.io/abhayjain99/abhayscoreme:1.0.0 done
+#12 DONE 0.0s
+[Pipeline] withCredentials
+Masking supported pattern matches of $dockerhubPassword
+[Pipeline] {
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [dockerhubPassword]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ docker login -u abhayjain99 -p ****
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /var/jenkins_home/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credential-stores
+
+Login Succeeded
+[Pipeline] sh
++ docker push abhayjain99/abhayscoreme:1.0.0
+The push refers to repository [docker.io/abhayjain99/abhayscoreme]
+aa5e273c0eac: Preparing
+dbba0491b064: Preparing
+05a3aaa863a9: Preparing
+21b6a6bcb30c: Preparing
+f2420ef8b261: Preparing
+5bea7fc396cd: Preparing
+88d2f55dcd87: Preparing
+29a9c1058a4b: Preparing
+3e620c160447: Preparing
+5bea7fc396cd: Waiting
+88d2f55dcd87: Waiting
+29a9c1058a4b: Waiting
+3e620c160447: Waiting
+21b6a6bcb30c: Layer already exists
+05a3aaa863a9: Layer already exists
+dbba0491b064: Layer already exists
+f2420ef8b261: Layer already exists
+29a9c1058a4b: Layer already exists
+3e620c160447: Layer already exists
+5bea7fc396cd: Layer already exists
+88d2f55dcd87: Layer already exists
+aa5e273c0eac: Pushed
+1.0.0: digest: sha256:acb7918dceaa75aa3a421f0b67f11f220fd6d2b31d5c12d549e6a42e80f0b3fc size: 2199
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (SonarQube analysis)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] tool
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] withSonarQubeEnv
+Injecting SonarQube environment variables using the configuration: sonar
+[Pipeline] {
+[Pipeline] sh
++ /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar/bin/sonar-scanner -Dsonar.sources=app -Dsonar.projectKey=Aj1704_PythonFlaskScoreme -Dsonar.organization=aj1704
+INFO: Scanner configuration file: /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar/conf/sonar-scanner.properties
+INFO: Project root configuration file: /var/jenkins_home/workspace/abhay@2/sonar-project.properties
+INFO: SonarScanner 5.0.1.3006
+INFO: Java 17.0.13 Eclipse Adoptium (64-bit)
+INFO: Linux 6.10.14-linuxkit aarch64
+INFO: User cache: /var/jenkins_home/.sonar/cache
+INFO: Analyzing on SonarCloud
+INFO: Default locale: "en", source code encoding: "UTF-8"
+INFO: Load global settings
+INFO: Load global settings (done) | time=30666ms
+INFO: Server id: 1BD809FA-AWHW8ct9-T_TB3XqouNu
+INFO: Loading required plugins
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=212ms
+INFO: Load/download plugins
+INFO: Load/download plugins (done) | time=95ms
+INFO: Found an active CI vendor: 'Jenkins'
+INFO: Load project settings for component key: 'Aj1704_PythonFlaskScoreme'
+INFO: Load project settings for component key: 'Aj1704_PythonFlaskScoreme' (done) | time=199ms
+INFO: Process project properties
+INFO: Project key: Aj1704_PythonFlaskScoreme
+INFO: Base dir: /var/jenkins_home/workspace/abhay@2
+INFO: Working dir: /var/jenkins_home/workspace/abhay@2/.scannerwork
+INFO: Load project branches
+INFO: Load project branches (done) | time=237ms
+INFO: Check ALM binding of project 'Aj1704_PythonFlaskScoreme'
+INFO: Detected project binding: BOUND
+INFO: Check ALM binding of project 'Aj1704_PythonFlaskScoreme' (done) | time=176ms
+INFO: Load project pull requests
+INFO: Load project pull requests (done) | time=176ms
+INFO: Load branch configuration
+INFO: Load branch configuration (done) | time=1ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=341ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=10088ms
+INFO: Organization key: aj1704
+INFO: Preprocessing files...
+INFO: 2 languages detected in 2 preprocessed files
+INFO: 0 files ignored because of inclusion/exclusion patterns
+INFO: 0 files ignored because of scm ignore settings
+INFO: Loading plugins for detected languages
+INFO: Load/download plugins
+INFO: Load/download plugins (done) | time=92ms
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=216ms
+INFO: Indexing files...
+INFO: Project configuration:
+INFO:   Excluded sources: **/build-wrapper-dump.json, **/tests/**, **/venv/**
+INFO: 2 files indexed
+INFO: Quality profile for docker: Sonar way
+INFO: Quality profile for py: Sonar way
+INFO: ------------- Run sensors on module sonar.projectKey=Aj1704_
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=186ms
+INFO: Sensor cache enabled
+INFO: Load sensor cache
+INFO: Load sensor cache (7 KB) | time=1395ms
+INFO: Sensor Python Sensor [python]
+WARN: Your code is analyzed as compatible with all Python 3 versions by default. You can get a more precise analysis by setting the exact Python version in your configuration via the parameter "sonar.python.version"
+INFO: Starting global symbols computation
+INFO: 1 source file to be analyzed
+INFO: 1/1 source file has been analyzed
+INFO: Starting rules execution
+INFO: 1 source file to be analyzed
+INFO: 1/1 source file has been analyzed
+INFO: The Python analyzer was able to leverage cached data from previous analyses for 0 out of 1 files. These files were not parsed.
+INFO: Sensor Python Sensor [python] (done) | time=2397ms
+INFO: Sensor Cobertura Sensor for Python coverage [python]
+INFO: Sensor Cobertura Sensor for Python coverage [python] (done) | time=63ms
+INFO: Sensor PythonXUnitSensor [python]
+INFO: Sensor PythonXUnitSensor [python] (done) | time=6ms
+INFO: Sensor Python HTML templates processing [securitypythonfrontend]
+INFO: Sensor Python HTML templates processing [securitypythonfrontend] (done) | time=5ms
+INFO: Sensor JaCoCo XML Report Importer [jacoco]
+INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=1ms
+INFO: Sensor Java Config Sensor [iac]
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Sensor Java Config Sensor [iac] (done) | time=33ms
+INFO: Sensor IaC Docker Sensor [iac]
+INFO: 1 source file to be analyzed
+INFO: 1/1 source file has been analyzed
+INFO: Sensor IaC Docker Sensor [iac] (done) | time=157ms
+INFO: Sensor Serverless configuration file sensor [security]
+INFO: 0 Serverless function entries were found in the project
+INFO: 0 Serverless function handlers were kept as entrypoints
+INFO: Sensor Serverless configuration file sensor [security] (done) | time=5ms
+INFO: Sensor AWS SAM template file sensor [security]
+INFO: Sensor AWS SAM template file sensor [security] (done) | time=0ms
+INFO: Sensor AWS SAM Inline template file sensor [security]
+INFO: Sensor AWS SAM Inline template file sensor [security] (done) | time=1ms
+INFO: Sensor EnterpriseTextAndSecretsSensor [textenterprise]
+INFO: Available processors: 1
+INFO: Using 1 thread for analysis.
+INFO: The property "sonar.tests" is not set. To improve the analysis accuracy, we categorize a file as a test file if any of the following is true:
+  * The filename starts with "test"
+  * The filename contains "test." or "tests."
+  * Any directory in the file path is named: "doc", "docs", "test" or "tests"
+  * Any directory in the file path has a name ending in "test" or "tests"
+
+INFO: Using git CLI to retrieve untracked files
+INFO: Analyzing language associated files and files included via "sonar.text.inclusions" that are tracked by git
+INFO: 2 source files to be analyzed
+INFO: 2/2 source files have been analyzed
+INFO: Sensor EnterpriseTextAndSecretsSensor [textenterprise] (done) | time=935ms
+INFO: Sensor javabugs [dbd]
+INFO: Reading IR files from: /var/jenkins_home/workspace/abhay@2/.scannerwork/ir/java
+INFO: No IR files have been included for analysis.
+INFO: Sensor javabugs [dbd] (done) | time=1ms
+INFO: Sensor pythonbugs [dbd]
+INFO: Reading IR files from: /var/jenkins_home/workspace/abhay@2/.scannerwork/ir/python
+INFO: Analyzing 32 functions to detect bugs.
+INFO: Sensor pythonbugs [dbd] (done) | time=295ms
+INFO: Sensor JavaSecuritySensor [security]
+INFO: Enabled taint analysis rules: S2076, S2078, S2083, S2091, S2631, S3649, S5131, S5135, S5144, S5145, S5146, S5147, S5334, S5496, S5883, S6096, S6173, S6287, S6350, S6384, S6390, S6398, S6399, S6547, S6549, S7044
+INFO: Load type hierarchy and UCFGs: Starting
+INFO: Load type hierarchy: Starting
+INFO: Reading type hierarchy from: /var/jenkins_home/workspace/abhay@2/.scannerwork/ucfg2/java
+INFO: Read 0 type definitions
+INFO: Load type hierarchy: Time spent was 00:00:00.001
+INFO: Load UCFGs: Starting
+INFO: Load UCFGs: Time spent was 00:00:00.000
+INFO: Load type hierarchy and UCFGs: Time spent was 00:00:00.001
+INFO: No UCFGs have been included for analysis.
+INFO: java security sensor: Time spent was 00:00:00.065
+INFO: java security sensor: Begin: 2024-12-04T08:19:29.631772711Z, End: 2024-12-04T08:19:29.696926836Z, Duration: 00:00:00.065
+  Load type hierarchy and UCFGs: Begin: 2024-12-04T08:19:29.632849461Z, End: 2024-12-04T08:19:29.634682253Z, Duration: 00:00:00.001
+    Load type hierarchy: Begin: 2024-12-04T08:19:29.632883920Z, End: 2024-12-04T08:19:29.634136545Z, Duration: 00:00:00.001
+    Load UCFGs: Begin: 2024-12-04T08:19:29.634462170Z, End: 2024-12-04T08:19:29.634519128Z, Duration: 00:00:00.000
+INFO: java security sensor peak memory: 83 MB
+INFO: Sensor JavaSecuritySensor [security] (done) | time=68ms
+INFO: Sensor CSharpSecuritySensor [security]
+INFO: Enabled taint analysis rules: S2076, S2078, S2083, S2091, S2631, S3649, S5131, S5135, S5144, S5145, S5146, S5147, S5334, S5883, S6096, S6173, S6287, S6350, S6399, S6547, S6549, S6639, S6641, S6680, S6776, S7044
+INFO: Load type hierarchy and UCFGs: Starting
+INFO: Load type hierarchy: Starting
+INFO: Reading type hierarchy from: /var/jenkins_home/workspace/abhay@2/ucfg2/cs
+INFO: Read 0 type definitions
+INFO: Load type hierarchy: Time spent was 00:00:00.000
+INFO: Load UCFGs: Starting
+INFO: Load UCFGs: Time spent was 00:00:00.000
+INFO: Load type hierarchy and UCFGs: Time spent was 00:00:00.000
+INFO: No UCFGs have been included for analysis.
+INFO: csharp security sensor: Time spent was 00:00:00.000
+INFO: csharp security sensor: Begin: 2024-12-04T08:19:29.698855795Z, End: 2024-12-04T08:19:29.699548586Z, Duration: 00:00:00.000
+  Load type hierarchy and UCFGs: Begin: 2024-12-04T08:19:29.698975003Z, End: 2024-12-04T08:19:29.699319128Z, Duration: 00:00:00.000
+    Load type hierarchy: Begin: 2024-12-04T08:19:29.698987295Z, End: 2024-12-04T08:19:29.699159420Z, Duration: 00:00:00.000
+    Load UCFGs: Begin: 2024-12-04T08:19:29.699231503Z, End: 2024-12-04T08:19:29.699253795Z, Duration: 00:00:00.000
+INFO: csharp security sensor peak memory: 83 MB
+INFO: Sensor CSharpSecuritySensor [security] (done) | time=2ms
+INFO: Sensor PhpSecuritySensor [security]
+INFO: Enabled taint analysis rules: S2076, S2078, S2083, S2091, S2631, S3649, S5131, S5135, S5144, S5145, S5146, S5334, S5335, S5883, S6173, S6287, S6350, S7044
+INFO: Load type hierarchy and UCFGs: Starting
+INFO: Load type hierarchy: Starting
+INFO: Reading type hierarchy from: /var/jenkins_home/workspace/abhay@2/.scannerwork/ucfg2/php
+INFO: Read 0 type definitions
+INFO: Load type hierarchy: Time spent was 00:00:00.000
+INFO: Load UCFGs: Starting
+INFO: Load UCFGs: Time spent was 00:00:00.000
+INFO: Load type hierarchy and UCFGs: Time spent was 00:00:00.000
+INFO: No UCFGs have been included for analysis.
+INFO: php security sensor: Time spent was 00:00:00.000
+INFO: php security sensor: Begin: 2024-12-04T08:19:29.700954836Z, End: 2024-12-04T08:19:29.701570211Z, Duration: 00:00:00.000
+  Load type hierarchy and UCFGs: Begin: 2024-12-04T08:19:29.701073711Z, End: 2024-12-04T08:19:29.701330586Z, Duration: 00:00:00.000
+    Load type hierarchy: Begin: 2024-12-04T08:19:29.701089378Z, End: 2024-12-04T08:19:29.701182336Z, Duration: 00:00:00.000
+    Load UCFGs: Begin: 2024-12-04T08:19:29.701246420Z, End: 2024-12-04T08:19:29.701264753Z, Duration: 00:00:00.000
+INFO: php security sensor peak memory: 83 MB
+INFO: Sensor PhpSecuritySensor [security] (done) | time=1ms
+INFO: Sensor PythonSecuritySensor [security]
+INFO: Enabled taint analysis rules: S2076, S2078, S2083, S2091, S2631, S3649, S5131, S5135, S5144, S5145, S5146, S5147, S5334, S5496, S6287, S6350, S6639, S6680, S6776, S6839, S7044
+INFO: Load type hierarchy and UCFGs: Starting
+INFO: Load type hierarchy: Starting
+INFO: Reading type hierarchy from: /var/jenkins_home/workspace/abhay@2/.scannerwork/ucfg2/python
+INFO: Read 206 type definitions
+INFO: Load type hierarchy: Time spent was 00:00:00.094
+INFO: Load UCFGs: Starting
+INFO: Reading UCFGs from: /var/jenkins_home/workspace/abhay@2/.scannerwork/ucfg2/python
+INFO: Load UCFGs: Time spent was 00:00:00.326
+INFO: Load type hierarchy and UCFGs: Time spent was 00:00:00.421
+INFO: Analyzing 936 UCFGs to detect vulnerabilities.
+INFO: Check cache: Starting
+INFO: Load cache: Starting
+INFO: Load cache: Time spent was 00:00:00.000
+INFO: Check cache: Time spent was 00:00:00.000
+INFO: Create runtime call graph: Starting
+INFO: Variable Type Analysis #1: Starting
+INFO: Create runtime type propagation graph: Starting
+INFO: Create runtime type propagation graph: Time spent was 00:00:00.010
+INFO: Run SCC (Tarjan) on 1964 nodes: Starting
+INFO: Run SCC (Tarjan) on 1964 nodes: Time spent was 00:00:00.002
+INFO: Tarjan found 1964 strongly connected components
+INFO: Propagate runtime types to strongly connected components: Starting
+INFO: Propagate runtime types to strongly connected components: Time spent was 00:00:00.053
+INFO: Variable Type Analysis #1: Time spent was 00:00:00.068
+INFO: Variable Type Analysis #2: Starting
+INFO: Create runtime type propagation graph: Starting
+INFO: Create runtime type propagation graph: Time spent was 00:00:00.005
+INFO: Run SCC (Tarjan) on 1961 nodes: Starting
+INFO: Run SCC (Tarjan) on 1961 nodes: Time spent was 00:00:00.001
+INFO: Tarjan found 1961 strongly connected components
+INFO: Propagate runtime types to strongly connected components: Starting
+INFO: Propagate runtime types to strongly connected components: Time spent was 00:00:00.002
+INFO: Variable Type Analysis #2: Time spent was 00:00:00.010
+INFO: Create runtime call graph: Time spent was 00:00:00.083
+INFO: Load config: Starting
+INFO: Load config: Time spent was 00:00:00.212
+INFO: Compute entry points: Starting
+INFO: Compute entry points: Time spent was 00:00:00.096
+INFO: No entry points found.
+INFO: python security sensor: Time spent was 00:00:00.829
+INFO: python security sensor: Begin: 2024-12-04T08:19:29.702038128Z, End: 2024-12-04T08:19:30.531718795Z, Duration: 00:00:00.829
+  Load type hierarchy and UCFGs: Begin: 2024-12-04T08:19:29.702185003Z, End: 2024-12-04T08:19:30.123541628Z, Duration: 00:00:00.421
+    Load type hierarchy: Begin: 2024-12-04T08:19:29.702196961Z, End: 2024-12-04T08:19:29.797057378Z, Duration: 00:00:00.094
+    Load UCFGs: Begin: 2024-12-04T08:19:29.797153587Z, End: 2024-12-04T08:19:30.123269003Z, Duration: 00:00:00.326
+  Check cache: Begin: 2024-12-04T08:19:30.123616962Z, End: 2024-12-04T08:19:30.123972003Z, Duration: 00:00:00.000
+    Load cache: Begin: 2024-12-04T08:19:30.123649878Z, End: 2024-12-04T08:19:30.123692170Z, Duration: 00:00:00.000
+  Create runtime call graph: Begin: 2024-12-04T08:19:30.124023837Z, End: 2024-12-04T08:19:30.207329795Z, Duration: 00:00:00.083
+    Variable Type Analysis #1: Begin: 2024-12-04T08:19:30.124556628Z, End: 2024-12-04T08:19:30.193205628Z, Duration: 00:00:00.068
+      Create runtime type propagation graph: Begin: 2024-12-04T08:19:30.125281628Z, End: 2024-12-04T08:19:30.135673253Z, Duration: 00:00:00.010
+      Run SCC (Tarjan) on 1964 nodes: Begin: 2024-12-04T08:19:30.136178462Z, End: 2024-12-04T08:19:30.138978962Z, Duration: 00:00:00.002
+      Propagate runtime types to strongly connected components: Begin: 2024-12-04T08:19:30.139116045Z, End: 2024-12-04T08:19:30.192858920Z, Duration: 00:00:00.053
+    Variable Type Analysis #2: Begin: 2024-12-04T08:19:30.195466545Z, End: 2024-12-04T08:19:30.206168337Z, Duration: 00:00:00.010
+      Create runtime type propagation graph: Begin: 2024-12-04T08:19:30.195523045Z, End: 2024-12-04T08:19:30.201285753Z, Duration: 00:00:00.005
+      Run SCC (Tarjan) on 1961 nodes: Begin: 2024-12-04T08:19:30.201628878Z, End: 2024-12-04T08:19:30.202994378Z, Duration: 00:00:00.001
+      Propagate runtime types to strongly connected components: Begin: 2024-12-04T08:19:30.203157045Z, End: 2024-12-04T08:19:30.206076337Z, Duration: 00:00:00.002
+  Load config: Begin: 2024-12-04T08:19:30.221743170Z, End: 2024-12-04T08:19:30.434043253Z, Duration: 00:00:00.212
+  Compute entry points: Begin: 2024-12-04T08:19:30.434468378Z, End: 2024-12-04T08:19:30.531091295Z, Duration: 00:00:00.096
+INFO: python security sensor peak memory: 83 MB
+INFO: Sensor PythonSecuritySensor [security] (done) | time=830ms
+INFO: Sensor JsSecuritySensor [security]
+INFO: Enabled taint analysis rules: S2631, S5131, S2076, S5146, S6287, S6096, S5883, S6105, S6350, S2083, S5147, S5696, S3649, S5144, S5334
+INFO: Load type hierarchy and UCFGs: Starting
+INFO: Load type hierarchy: Starting
+INFO: Reading type hierarchy from: /var/jenkins_home/workspace/abhay@2/.scannerwork/ucfg2/js
+INFO: Read 0 type definitions
+INFO: Load type hierarchy: Time spent was 00:00:00.000
+INFO: Load UCFGs: Starting
+INFO: Load UCFGs: Time spent was 00:00:00.000
+INFO: Load type hierarchy and UCFGs: Time spent was 00:00:00.000
+INFO: No UCFGs have been included for analysis.
+INFO: js security sensor: Time spent was 00:00:00.000
+INFO: js security sensor: Begin: 2024-12-04T08:19:30.532920379Z, End: 2024-12-04T08:19:30.533671379Z, Duration: 00:00:00.000
+  Load type hierarchy and UCFGs: Begin: 2024-12-04T08:19:30.533188920Z, End: 2024-12-04T08:19:30.533519212Z, Duration: 00:00:00.000
+    Load type hierarchy: Begin: 2024-12-04T08:19:30.533199254Z, End: 2024-12-04T08:19:30.533359254Z, Duration: 00:00:00.000
+    Load UCFGs: Begin: 2024-12-04T08:19:30.533473795Z, End: 2024-12-04T08:19:30.533490420Z, Duration: 00:00:00.000
+INFO: js security sensor peak memory: 83 MB
+INFO: Sensor JsSecuritySensor [security] (done) | time=1ms
+INFO: ------------- Run sensors on project
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=4ms
+INFO: CPD Executor 1 file had no CPD blocks
+INFO: CPD Executor Calculating CPD for 0 files
+INFO: CPD Executor CPD calculation finished (done) | time=0ms
+INFO: Analysis report generated in 300ms, dir size=272 KB
+INFO: Analysis report compressed in 16ms, zip size=55 KB
+INFO: Analysis report uploaded in 464ms
+INFO: ANALYSIS SUCCESSFUL, you can find the results at: https://sonarcloud.io/dashboard?id=Aj1704_PythonFlaskScoreme
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at https://sonarcloud.io/api/ce/task?id=AZOQwMALwYHKkCy-t-3r
+INFO: Sensor cache published successfully
+INFO: Analysis total time: 23.027 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 12:34.096s
+INFO: Final Memory: 40M/113M
+INFO: ------------------------------------------------------------------------
+[Pipeline] }
+[Pipeline] // withSonarQubeEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Quality Gate)
+[Pipeline] timeout
+Timeout set to expire in 1 hr 0 min
+[Pipeline] {
+[Pipeline] waitForQualityGate
+Checking status of SonarQube task 'AZOQwMALwYHKkCy-t-3r' on server 'sonar'
+SonarQube task 'AZOQwMALwYHKkCy-t-3r' status is 'SUCCESS'
+SonarQube task 'AZOQwMALwYHKkCy-t-3r' completed. Quality gate is 'OK'
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Coverage)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ /bin/bash -c python3 -m venv ~/venv; . ~/venv/bin/activate; ~/venv/bin/pip install -r requirements.txt; lizard; coverage run
+Requirement already satisfied: makefile in /var/jenkins_home/venv/lib/python3.11/site-packages (from -r requirements.txt (line 1)) (1.1.0)
+Requirement already satisfied: Flask==2.0.3 in /var/jenkins_home/venv/lib/python3.11/site-packages (from -r requirements.txt (line 2)) (2.0.3)
+Requirement already satisfied: flaky==3.7.0 in /var/jenkins_home/venv/lib/python3.11/site-packages (from -r requirements.txt (line 3)) (3.7.0)
+Requirement already satisfied: Flask-BasicAuth==0.2.0 in /var/jenkins_home/venv/lib/python3.11/site-packages (from -r requirements.txt (line 4)) (0.2.0)
+Requirement already satisfied: Flask-Cors==3.0.10 in /var/jenkins_home/venv/lib/python3.11/site-packages (from -r requirements.txt (line 5)) (3.0.10)
+Requirement already satisfied: Flask-RESTful==0.3.9 in /var/jenkins_home/venv/lib/python3.11/site-packages (from -r requirements.txt (line 6)) (0.3.9)
+Requirement already satisfied: coverage in /var/jenkins_home/venv/lib/python3.11/site-packages (from -r requirements.txt (line 7)) (7.6.8)
+Requirement already satisfied: lizard in /var/jenkins_home/venv/lib/python3.11/site-packages (from -r requirements.txt (line 8)) (1.17.13)
+Requirement already satisfied: Werkzeug>=2.0 in /var/jenkins_home/venv/lib/python3.11/site-packages (from Flask==2.0.3->-r requirements.txt (line 2)) (3.1.3)
+Requirement already satisfied: Jinja2>=3.0 in /var/jenkins_home/venv/lib/python3.11/site-packages (from Flask==2.0.3->-r requirements.txt (line 2)) (3.1.4)
+Requirement already satisfied: itsdangerous>=2.0 in /var/jenkins_home/venv/lib/python3.11/site-packages (from Flask==2.0.3->-r requirements.txt (line 2)) (2.2.0)
+Requirement already satisfied: click>=7.1.2 in /var/jenkins_home/venv/lib/python3.11/site-packages (from Flask==2.0.3->-r requirements.txt (line 2)) (8.1.7)
+Requirement already satisfied: Six in /var/jenkins_home/venv/lib/python3.11/site-packages (from Flask-Cors==3.0.10->-r requirements.txt (line 5)) (1.16.0)
+Requirement already satisfied: aniso8601>=0.82 in /var/jenkins_home/venv/lib/python3.11/site-packages (from Flask-RESTful==0.3.9->-r requirements.txt (line 6)) (9.0.1)
+Requirement already satisfied: pytz in /var/jenkins_home/venv/lib/python3.11/site-packages (from Flask-RESTful==0.3.9->-r requirements.txt (line 6)) (2024.2)
+Requirement already satisfied: pygments in /var/jenkins_home/venv/lib/python3.11/site-packages (from lizard->-r requirements.txt (line 8)) (2.18.0)
+Requirement already satisfied: MarkupSafe>=2.0 in /var/jenkins_home/venv/lib/python3.11/site-packages (from Jinja2>=3.0->Flask==2.0.3->-r requirements.txt (line 2)) (3.0.2)
+================================================
+  NLOC    CCN   token  PARAM  length  location  
+------------------------------------------------
+       2      1      6      0       2 hello_world@4-5@./app/app.py
+1 file analyzed.
+==============================================================
+NLOC    Avg.NLOC  AvgCCN  Avg.token  function_cnt    file
+--------------------------------------------------------------
+      7       2.0     1.0        6.0         1     ./app/app.py
+
+===============================================================================================================
+No thresholds exceeded (cyclomatic_complexity > 15 or length > 1000 or nloc > 1000000 or parameter_count > 100)
+==========================================================================================
+Total nloc   Avg.NLOC  AvgCCN  Avg.token   Fun Cnt  Warning cnt   Fun Rt   nloc Rt
+------------------------------------------------------------------------------------------
+         7       2.0     1.0        6.0        1            0      0.00    0.00
+Nothing to do.
+Use 'coverage help' for help.
+Full documentation is at https://coverage.readthedocs.io/en/7.6.8
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+Finished: FAILURE
