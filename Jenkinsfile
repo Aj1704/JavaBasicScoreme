@@ -23,5 +23,15 @@ pipeline {
                 }
             }
         }
+        stage('SonarQube analysis') {
+          steps {
+            script {
+                scannerHome = tool 'sonar'
+            }
+            withSonarQubeEnv('SonarCloud') {
+              sh "${scannerHome}/bin/sonar-scanner"
+            }
+          }
+    }
     }
 }
