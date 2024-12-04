@@ -1,7 +1,7 @@
 Setting Up Jenkins on Minikube:
 
-Installed jenkins using yaml files, attached in folder Jenkins (added this folder in repository afterwards to make thing clear)
-  created the minikube url to expose the jenkins-svc to host's url 
+Installed jenkins using yaml files, attached in folder Jenkins (added this folder in repository afterwards to make thing clear) <br />
+  created the minikube url to expose the jenkins-svc to host's url <br />
   Loged IN and took the start(admin token) to start jenkins
   created admin user and installed required basic plugin like git,maven,etc
   Added ssh-creds from github to clone the repository
