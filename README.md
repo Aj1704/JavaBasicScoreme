@@ -11,13 +11,8 @@ Installed jenkins using yaml files, attached in folder Jenkins (added this folde
   ![Alt text](Sonar/Credentials.png?raw=true "Credentials Jenkins")
 <br />
 ![Alt text](Sonar/JenkinsGitPipeline.png?raw=true "Git Pipeline Config")
-
-<br />
-![Alt text](Sonar/JenkinsPods.png?raw=true "Jenkins Pod on Minikube")
-  
-<br />
-<br />
-<br />
+*JenkinsPods
+![Alt text](Sonar/JenkinsPods.png?raw=true "JenkinsPods")
 Created the repository **PyhtonFlaskScoreme** in github<br />
 <br />
   *added basic flask code<br />
@@ -39,9 +34,7 @@ Installed **sonar** in jenkins<br />
 *Already have installed **lizard** to check complexity of code and **coverage** to check code coverage in python<br />
 *This is all done in Dockerfile of jenkins itself so that it is available in my jenkins host itself<br />
 
-Github
-
-<br />
+*Github
 ![Alt text](Sonar/Github.png?raw=true "Github")
 
   
