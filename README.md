@@ -1,4 +1,4 @@
-Setting Up Jenkins on Minikube:
+Setting Up Jenkins on Minikube: <br />
 ***1. Jenkins Setup***
 Installed jenkins using yaml files, attached in folder Jenkins (added this folder in repository afterwards to make thing clear) <br />
 <br />
