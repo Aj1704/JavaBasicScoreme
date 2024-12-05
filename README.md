@@ -1,5 +1,5 @@
 Setting Up Jenkins on Minikube: <br />
-***1. Jenkins Setup***
+***1. Jenkins Setup*** <br />
 Installed jenkins using yaml files, attached in folder Jenkins (added this folder in repository afterwards to make thing clear) <br />
 <br />
   *created the minikube url to expose the jenkins-svc to host's url <br />
@@ -14,7 +14,7 @@ Installed jenkins using yaml files, attached in folder Jenkins (added this folde
 *JenkinsPods
 ![Alt text](Sonar/JenkinsPods.png?raw=true "JenkinsPods")
 
-***2. SCM***
+***2. SCM***<br />
 Created the repository **PyhtonFlaskScoreme** in github<br />
 <br />
   *added basic flask code<br />
@@ -24,41 +24,38 @@ Created the repository **PyhtonFlaskScoreme** in github<br />
 
 **Created Docker registry account<br />**
   *Added docker secrets into jenkins secret <br />
-  
-<br />
-<br />
-<br />
-***3. Pipeline Creation***
+
+***3. Pipeline Creation*** <br />
 ![Alt text](Sonar/Pipeline.png?raw=true "Pipeline")
-*GithubPolling*
+
+*GithubPolling* <br />
 ![Alt text](Sonar/GithubPoll.png?raw=true "GithubPolling")
-***4. Code Quality Check***
+***4. Code Quality Check***<br />
 Installed **sonar** in jenkins<br />
   *Screenshot attached<br />
-  <br />
 ![Alt text](Sonar/SonarJenkinsManageTools.png?raw=true "SonarJenkinsManageTools")
 ![Alt text](Sonar/SonarPlugin.png?raw=true "SonarPlugin")
   *created the sonar account and took secret to add this as text in jenkins secrets<br />
   *integrated the sonar-project.properties file in repo to handle sonar params<br />
 
  
-***5. Code Coverage and 6. Cyclomatic Complexity***
+***5. Code Coverage and 6. Cyclomatic Complexity***<br />
 *Already have installed **lizard** to check complexity of code [Can be found in logs] and **coverage** to check code coverage [can be seen in attahced artifacts] in python using pytest, also this lead to coverage issues on sonar so have bypassed the test files there<br />
 *This is all done in Dockerfile of jenkins itself so that it is available in my jenkins host itself<br />
 ![Alt text](Sonar/Artifacts.png?raw=true "Artifacts")
 
 
-***7. Security Vulnerability Scan: Tried to use depscan and safety-cli***
+***7. Security Vulnerability Scan: Tried to use depscan and safety-cli***<br />
 
 Safety CLI: issue with subscritptions
 depscan: having some issue with dependency, will try to figure this.
 
- ***8. Notifications:*** 
+ ***8. Notifications:*** <br />
  Tried to send mails through gmail smtp but having isse with connections [Screenshot attached]
   Email 
   ![Alt text](Sonar/EmailSetup.png?raw=true "Email Setup")
 
-Summary:
+Summary:<br />
 
 1. Jenkins Setup --> done
 2. SCM --> done along with SCM polling
